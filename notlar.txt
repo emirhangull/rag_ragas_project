@@ -1,0 +1,28 @@
+amacım bir doküman havuzundan istediğim chunku getiren bi algoritma yazmak
+
+işin zorluğu:
+
+birden fazla uzun contextli doküman var
+
+bu dokümanlar arasından istediğim chunku getirmeye çalışacağım
+
+çok doküman ve çok uzun içerikleri olduğu için başarım benim için çok önemli
+
+chunking algoritması uygulamam lazım
+
+bir proje yaptım bu istediğimle ilgili
+
+tek bir doküman alıyor ve onu okuyor
+
+benim amacımı tam yansıtmıyor ama en azından çalışan bir taslak var
+
+şöyle çalışıyor
+
+localhost:8099 adresinden 1 adet dosya yüklüyorum
+
+o dosyayı chunklara bölüyor embedliyor qdranta kaydediyor
+
+daha sonra query ile sorgumu embedliyor qdranttan en ilgili chunkları getiriyor (rerank model ile)
+
+ve nihai cevap bir ssh server bilgisayarındaki 8108 portunda hazırda ayakta olan vllm modeline ürettiriliyor (temperature değeri 0 sadece chunklar içerisinden cevap çıkarıyor)
+

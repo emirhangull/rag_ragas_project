@@ -1,0 +1,1 @@
+Bu bir test dokümanıdır. Longformer ve BigBird raporda geçen modellerdir. ModernBERT de aday olarak geçer.
