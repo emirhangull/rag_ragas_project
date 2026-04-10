@@ -4,11 +4,6 @@ PDF ve metin dosyalarını yükleyip doğal dil soruları sormanı sağlayan, hi
 
 ---
 
-## Mimari
-
-![Sistem Mimarisi](https://raw.githubusercontent.com/emirhangull/rag_ragas_project/main/architecture.png)
----
-
 ## Özellikler
 
 - **Dosya yükleme** — PDF ve TXT desteği, otomatik chunk'lama
