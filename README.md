@@ -6,7 +6,7 @@ PDF ve metin dosyalarını yükleyip doğal dil soruları sormanı sağlayan, hi
 
 ## Mimari
 
-![Sistem Mimarisi](architecture.svg)
+<img src="architecture.svg" width="100%">
 
 ---
 
