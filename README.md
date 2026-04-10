@@ -13,7 +13,7 @@ PDF ve metin dosyalarını yükleyip doğal dil soruları sormanı sağlayan, hi
 ## Özellikler
 
 - **Dosya yükleme** — PDF ve TXT desteği, otomatik chunk'lama
-- **Hibrit arama** — Dense (vektör) + BM25 (lexical) + Rerank + MMR
+- **Hibrit arama** — Dense (vektör) + BM25 (lexical) 
 - **vLLM entegrasyonu** — yerel LLM üzerinden cevap üretimi
 - **RAGAS değerlendirme** — faithfulness, answer relevancy, context precision otomatik ölçümü
 - **Multi-doc** — birden fazla belge aynı anda indexlenebilir
