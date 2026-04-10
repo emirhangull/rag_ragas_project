@@ -6,8 +6,7 @@ PDF ve metin dosyalarını yükleyip doğal dil soruları sormanı sağlayan, hi
 
 ## Mimari
 
-![Sistem Mimarisi]([architecture.png](https://github.com/emirhangull/rag_ragas_project/blob/a443b0d637baa55ba41d79bff6c23a3c2a9b2193/architecture.png))
-
+![Sistem Mimarisi](https://raw.githubusercontent.com/emirhangull/rag_ragas_project/main/architecture.png)
 ---
 
 ## Özellikler
