@@ -26,3 +26,8 @@ daha sonra query ile sorgumu embedliyor qdranttan en ilgili chunkları getiriyor
 
 ve nihai cevap bir ssh server bilgisayarındaki 8108 portunda hazırda ayakta olan vllm modeline ürettiriliyor (temperature değeri 0 sadece chunklar içerisinden cevap çıkarıyor)
 
+ragas_evaluator.py — Qdrant'tan gelen chunk'lardan testset üretme (build_testset) ve pipeline'ı ragas metrikleriyle değerlendirme (evaluate_pipeline) fonksiyonlarını içerir.
+pipeline.py — Orijinal RAG pipeline'ına build_ragas_testset() ve evaluate_with_ragas() metodlarını ekleyerek ragas entegrasyonunu pipeline içine gömdük.
+run_evaluation.py — Komut satırından --only-build, --only-eval, --doc_id, --size parametreleriyle testset üretimi ve değerlendirmeyi tek scriptten yönetmeyi sağlar.
+testset_cache.json — GuardRail raporundan LLM tarafından üretilen 12 soru-cevap çiftini içeren kalıcı referans dosyası.
+eval_results.csv — Her soru için pipeline'ın ürettiği cevap, retrieve edilen context'ler ve 4 ragas metrik skorunu içeren değerlendirme çıktısı.

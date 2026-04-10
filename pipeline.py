@@ -97,7 +97,6 @@ class RagPipeline:
 
         hits = self.retriever.search(question, doc_id=doc_id)
 
-        # Çok dokümanlı yapıda LLM'e chunk'ın hangi kaynaktan geldiğini söylemek başarıyı artırır
         context_chunks = [f"[Kaynak: {item.source_name}] {item.text}" for item in hits]
 
         answer = self.vllm.answer_with_context(question, context_chunks)
@@ -166,6 +165,87 @@ class RagPipeline:
                 for item in hits
             ],
         }
+
+    # ------------------------------------------------------------------
+    # Ragas Testset Üretimi
+    # ------------------------------------------------------------------
+
+    def build_ragas_testset(
+        self,
+        testset_size: int = 10,
+        doc_id: str | None = None,
+        save_path: str = "testset_cache.json",
+    ) -> list[dict]:
+        """
+        İndekslenmiş dokümanlardan otomatik soru-cevap testset'i üretir.
+
+        Parameters
+        ----------
+        testset_size : Üretilecek soru sayısı
+        doc_id       : Belirli bir dokümanla sınırla (None = tüm havuz)
+        save_path    : Üretilen testset'in kaydedileceği JSON dosyası
+
+        Returns
+        -------
+        list[dict] : [{"question": ..., "ground_truth": ...}, ...]
+        """
+        from .ragas_evaluator import build_testset
+
+        # Qdrant'tan chunk'ları çek
+        if doc_id:
+            rows = self.indexer.list_chunks(doc_id=doc_id, limit=500)
+        else:
+            rows = self.indexer.scroll_all(limit=2000)
+
+        if not rows:
+            raise ValueError("Testset üretmek için önce doküman yükleyin.")
+
+        texts = [row["text"] for row in rows]
+        source_names = [row["source_name"] for row in rows]
+
+        logger.info(
+            "Testset üretimi: %d chunk, %d soru hedefleniyor",
+            len(texts), testset_size,
+        )
+
+        return build_testset(
+            texts=texts,
+            source_names=source_names,
+            testset_size=testset_size,
+            save_path=save_path,
+        )
+
+    # ------------------------------------------------------------------
+    # Ragas Değerlendirmesi
+    # ------------------------------------------------------------------
+
+    def evaluate_with_ragas(
+        self,
+        testset_path: str = "testset_cache.json",
+        save_path: str = "eval_results.csv",
+        doc_id: str | None = None,
+    ):
+        """
+        Kaydedilmiş testset üzerinde pipeline'ı değerlendirir.
+
+        Parameters
+        ----------
+        testset_path : build_ragas_testset() ile üretilen JSON
+        save_path    : Sonuçların kaydedileceği CSV
+        doc_id       : Belirli bir dokümanla sınırla (None = tüm havuz)
+
+        Returns
+        -------
+        pandas.DataFrame : Metrik sonuçları
+        """
+        from .ragas_evaluator import evaluate_pipeline
+
+        return evaluate_pipeline(
+            pipeline=self,
+            testset_path=testset_path,
+            save_path=save_path,
+            doc_id=doc_id,
+        )
 
     # ------------------------------------------------------------------
     # Document management

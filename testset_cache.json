@@ -1,0 +1,50 @@
+[
+  {
+    "question": "What is the purpose of the Fine-Tuned GuardRail Model in the context of data quality and safety?",
+    "ground_truth": "The Fine-Tuned GuardRail Model is part of the Safe/Unsafe Prompt Sınıflandırıcı Projesi developed by HAVELSAN A.Ş. – Yapay Zeka Grup Liderliği. The project involves data preparation processes, model architectures, and evaluation, with a focus on classifying prompts as safe or unsafe. The team responsible for developing the project includes Emirhan Gül, Furkan Yeşildağ, and İrem Yalçın, and the report was prepared in March 2026."
+  },
+  {
+    "question": "What is Dil Normalizasyonu?",
+    "ground_truth": "Dil Normalizasyonu is mentioned in the context as part of section 2.3, which also includes Veri Augmentasyonu, Çeviri Motorları, and Çeviri Kalite Doğrulama."
+  },
+  {
+    "question": "What is the role of Sistem Promptu in synthetic data production using vLLM?",
+    "ground_truth": "Sistem Promptu is a component listed under section 2.5.5 of the vLLM synthetic data production process, indicating its relevance in the structured workflow for generating synthetic datasets."
+  },
+  {
+    "question": "How is Uzun Unsafe Prompt Oluşturma achieved according to the context?",
+    "ground_truth": "Uzun Unsafe Prompt Oluşturma is achieved through Prompt Injection, as indicated in section 2.7.2 of the provided context."
+  },
+  {
+    "question": "How does the Manuel Test Prosedürü address prompt injection detection in Turkish and English datasets?",
+    "ground_truth": "The Manuel Test Prosedürü addresses prompt injection detection by testing the model with creative jailbreak attempts, mixed language usage, and social engineering techniques that are not covered in automatic benchmarks. For Turkish and English datasets, the process involves converting input text to lowercase to neutralize case-based jailbreak techniques, encoding the text using the Longformer tokenizer up to a 4096 token limit, and applying global attention masks based on short/long sequence rules. Additionally, the dataset balance is managed by oversampling unsafe examples, undersampling safe examples, and using Focal Loss to handle class imbalance, while synthetic data generation targets underrepresented unsafe categories."
+  },
+  {
+    "question": "How does the sliding window attention mechanism contribute to feature space compression in the context of safety classification?",
+    "ground_truth": "The sliding window attention mechanism contributes to feature space compression by allowing each token to focus only on a specific number of neighboring tokens rather than scanning the entire model. This localized attention helps in progressively compressing the feature space and highlighting the most distinctive features for the task, as seen in the safety classification head where the input is reduced from 4d to 2d through linear transformations and normalization layers."
+  },
+  {
+    "question": "Genel Test Seti Başarımı ve Prompt injection detection konularında, V5 modelinin Unsafe F1-Score değeri nedir ve bu değerin hesaplanmasında hangi faktörler dikkate alınmıştır?",
+    "ground_truth": "V5 modelinin Unsafe F1-Score değeri %98.17 olarak tespit edilmiştir. Bu değer, modelin hassasiyet (Precision) ve duyarlılık (Recall) dengesinin matematiksel harmonik ortalaması alınarak hesaplanmıştır. Genel Test Seti Başarımı kapsamında, V1'den V5'e doğru gidildiğinde iterasyon başarılarının artarak V5 sürümünde en stabil seviyeye ulaştığı görülmektedir. Prompt injection detection konusunda ise, Türkçe ve İngilizce prompt injection tespiti için farklı veri setleri kullanılmıştır. Eğitim setinde Safe/Unsafe sınıf dengesizliği, unsafe örneklerin aşırı örnekleme yoluyla çoğaltılması, safe örneklere alt örnekleme uygulanması ve Focal Loss kayıp fonksiyonunun tercih edilmesiyle giderilmiştir. Ayrıca, Unsafe kategori dengesizliği sentetik veri üretimi ile giderilmiştir."
+  },
+  {
+    "question": "How does the Focal Loss function address class imbalance in the Fine-Tuned GuardRail Model, and why is this critical for unsafe prompt detection?",
+    "ground_truth": "The Focal Loss function addresses class imbalance by reducing the weight of easy examples from the majority class (safe) and focusing training on hard examples from the minority class (unsafe). This is critical for unsafe prompt detection because missing unsafe examples (false negatives) poses a much greater risk than generating false alarms (false positives), and the Focal Loss helps the model prioritize detecting these high-risk cases."
+  },
+  {
+    "question": "How does the data set split ratio described in Tablo 17 relate to the evaluation metrics used in the security model, and what is the purpose of each split in the context of model training and validation?",
+    "ground_truth": "Tablo 17 outlines the data set split ratios and their usage purposes: 76.5% for training, which involves updating the model's network weights through gradient descent; 8.5% for validation, used during training for hyperparameter optimization and overfitting control; and 15.0% for testing, which is an internal evaluation conducted after training is complete. These splits are independent of the external benchmark test designed to measure the model's robustness against real-world scenarios in the final stage of the project. The evaluation metrics, such as True Positive (TP), which refers to content that is actually unsafe and correctly identified as unsafe by the model, are analyzed within the context of these splits to assess the model's performance and the risk costs associated with different error types in a security model."
+  },
+  {
+    "question": "How is Unsafe F1 calculated during the model evaluation process?",
+    "ground_truth": "Unsafe F1 is calculated during the model evaluation process by processing all validation batches sequentially, performing forward passes with AMP (mixed precision), accumulating predictions and real labels, and then computing metrics including Macro F1, Unsafe F1, Precision, and Recall."
+  },
+  {
+    "question": "Why did the allenai/longformer-base-4096 model fail to detect Turkish jailbreak and murder queries during initial training, and how does its architecture support long document processing?",
+    "ground_truth": "The allenai/longformer-base-4096 model failed to detect Turkish jailbreak and murder queries during initial training because it was fine-tuned only on Turkish data while its pretrained weights were optimized for English grammar and syntax, resulting in insufficient Turkish classification capability (Macro F1: 0.19). Its architecture supports long document processing through sliding window attention for local context and global attention for selected tokens, maintaining computational efficiency while preserving holistic context."
+  },
+  {
+    "question": "How does the combination of sliding window attention and global attention mechanisms improve the detection of harmful content in long and complex texts, and what role does global attention play in addressing computational complexity limitations in transformer architectures?",
+    "ground_truth": "The combination of sliding window attention and global attention mechanisms significantly enhances the model's ability to detect harmful content in long and complex texts, particularly for security classification tasks. This architectural decision is critical for identifying hidden attacks like prompt injections that may originate from tokens in the middle or end of long contexts. Global attention allows specific strategic tokens (such as the [CLS] token used for classification) to attend to all other tokens in the sentence, while sliding window attention enables each token to observe a window of w/2 width on both sides of its position. This hybrid approach addresses the computational complexity limitations of standard transformer architectures, where self-attention has O(n²) complexity that restricts maximum text length. By incorporating global attention alongside sliding window attention, models can achieve linear O(n) complexity similar to BigBird's sparse attention mechanism, overcoming hardware bottlenecks that typically limit BERT-based architectures to 512 tokens."
+  }
+]
