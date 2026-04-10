@@ -4,6 +4,12 @@ PDF ve metin dosyalarını yükleyip doğal dil soruları sormanı sağlayan, hi
 
 ---
 
+## Mimari
+
+![Sistem Mimarisi](architecture.png)
+
+---
+
 ## Özellikler
 
 - **Dosya yükleme** — PDF ve TXT desteği, otomatik chunk'lama
